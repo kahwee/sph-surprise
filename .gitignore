@@ -1,0 +1,14 @@
+Thumbs.db
+nbproject
+*.iws
+*.war
+.classpath
+.DS_Store
+.project
+.settings
+/*.launch
+/*.tmproj
+/out/**
+app/config/database.php
+app/config/local.php
+Desktop.ini
