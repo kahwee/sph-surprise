@@ -7,15 +7,35 @@ class UsersController extends AppController {
 
 	function beforeFilter() {
 		parent::beforeFilter();
-		$this->Auth->allow('*');
+		$this->Auth->fields = array(
+			'username' => 'email',
+			'password' => 'password_hash'
+		);
 	}
 
 	function login() {
-
+		if ($this->data) {
+			$login = $this->Auth->login($this->data);
+			if (empty($login)) {
+				$this->Session->setFlash("The email and password combination does not match. Lost your password?");
+			}
+		}
 	}
 
 	function logout() {
+		$this->redirect($this->Auth->logout());
+	}
 
+	function register() {
+		if (!empty($this->data)) {
+			$this->User->create();
+			$this->data['User']['password_hash'] = $this->Auth->password($this->data['User']['password_confirm2']);
+			if ($this->User->save($this->data)) {
+				#Time to send an email?
+				$this->Auth->login($this->data);
+				$this->redirect(array('controller' => 'posts', 'action' => 'index'));
+			}
+		}
 	}
 
 	function backstage_index() {

@@ -159,7 +159,7 @@
 /**
  * The name of CakePHP's session cookie.
  */
-	Configure::write('Session.cookie', 'jeonbokjuk');
+	Configure::write('Session.cookie', 'muramasa');
 
 /**
  * Session time out time (in seconds).
@@ -232,8 +232,8 @@ Configure::write('Asset.filter.css', 'css.php');
  * The classname and database used in CakePHP's
  * access control lists.2
  */
-	Configure::write('Acl.classname', 'DbAcl');
-	Configure::write('Acl.database', 'default');
+	//Configure::write('Acl.classname', 'DbAcl');
+	//Configure::write('Acl.database', 'default');
 
 date_default_timezone_set('UTC');
 

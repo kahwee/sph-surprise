@@ -12,15 +12,39 @@ class User extends AppModel {
 				'message' => 'Email does not appear to be valid.',
 				'required' => true,
 			),
+			'isUnique' => array(
+				'rule' => array('isUnique'),
+				'message' => 'This email exists in the system. Lost your password?',
+				'required' => true,
+			),
+		),
+		'password_confirm1' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+			),
+			'maxlength' => array(
+				'rule' => array('between', 8, 20),
+				'message' => 'Passwords must be between 8 and 20 characters.',
+				'required' => true,
+			),
+		),
+		'password_confirm2' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+			),
+			'maxlength' => array(
+				'rule' => array('between', 8, 20),
+				'message' => 'Passwords must be between 8 and 20 characters.',
+				'required' => true,
+			),
+			'isEqualTo' => array(
+				'rule' => array('equalTo', 'password_confirm1'), // password is hashed
+				'message' => 'Passwords do not match.'
+			),
 		),
 		'password_hash' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-			//'message' => 'Your custom message here',
-			//'allowEmpty' => false,
-			//'required' => false,
-			//'last' => false, // Stop validation after this rule
-			//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
 		'first_name' => array(
@@ -77,21 +101,6 @@ class User extends AppModel {
 			'counterQuery' => ''
 		)
 	);
-
-	function parentNode() {
-		if (!$this->id && empty($this->data)) {
-			return null;
-		}
-		$data = $this->data;
-		if (empty($this->data)) {
-			$data = $this->read();
-		}
-		if (empty($data['User']['role_id'])) {
-			return null;
-		} else {
-			return array('Role' => array('id' => $data['User']['role_id']));
-		}
-	}
 
 	/**
 	 * Called before each save operation, after validation. Return a non-true result
