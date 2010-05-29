@@ -11,4 +11,5 @@ nbproject
 /out/**
 app/config/database.php
 app/config/local.php
+app/tmp/**/*
 Desktop.ini

@@ -1,26 +1,7 @@
 <?php
 /**
- * This is core configuration file.
- *
- * Use it to configure core behaviour ofCake.
- *
- * PHP versions 4 and 5
- *
- * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
- *
- * Licensed under The MIT License
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @package       cake
- * @subpackage    cake.app.config
- * @since         CakePHP(tm) v 0.2.9
- * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
- */
-/**
  * In this file you set up your database connection details.
+ * You need to edit the value for $production
  *
  * @package       cake
  * @subpackage    cake.config
@@ -74,15 +55,23 @@
 class DATABASE_CONFIG {
 
 	var $default = array(
-		'driver' => 'mysql',
+		'driver' => 'mysqli',
 		'persistent' => false,
-		'host' => 'localhost',
-		'login' => 'user',
-		'password' => 'password',
-		'database' => 'database_name',
+		'host' => '127.0.0.1',
+		'login' => 'root',
+		'password' => '',
+		'database' => 'blog_app',
 		'prefix' => '',
 	);
-
+	var $kahwee_dev = array(
+		'driver' => 'mysqli',
+		'persistent' => false,
+		'host' => '127.0.0.1',
+		'login' => 'root',
+		'password' => '',
+		'database' => 'blog_app',
+		'prefix' => '',
+	);
 	var $test = array(
 		'driver' => 'mysql',
 		'persistent' => false,
@@ -92,5 +81,18 @@ class DATABASE_CONFIG {
 		'database' => 'test_database_name',
 		'prefix' => '',
 	);
+
+	/**
+	 * Crucial for environment selection. This is mainly used for Twitter and Plurk especially.
+	 */
+	function __construct() {
+		$env = Configure::read('environment');
+		$obj = get_object_vars($this);
+		if (isset($obj["$env"]))
+			$this->default = $obj["$env"];
+		else
+			throw new Exception("Database configuration for '$env' is not found.");
+	}
+
 }
 ?>
