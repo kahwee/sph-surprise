@@ -4,7 +4,7 @@
  		<legend><?php printf(__('Backstage Edit %s', true), __('Post', true)); ?></legend>
 	<?php
 		echo $this->Form->input('id');
-		echo $this->Form->input('title');
+		echo $this->Form->input('title', array('type' => 'text'));
 		echo $this->Wysiwyg->editor('content',
 			array(),
 			array(

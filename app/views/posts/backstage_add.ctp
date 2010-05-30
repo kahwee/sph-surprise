@@ -3,7 +3,7 @@
 	<fieldset>
 		<legend><?php __('Add a new post'); ?></legend>
 		<?php
-		echo $this->Form->input('title');
+		echo $this->Form->input('title', array('type' => 'text'));
 		echo $this->Wysiwyg->editor('content',
 			array(),
 			array(

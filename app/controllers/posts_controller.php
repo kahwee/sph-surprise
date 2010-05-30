@@ -18,11 +18,31 @@ class PostsController extends AppController {
 						'fields' => array('Post.id', 'Post.title', 'Post.comment_count', 'Post.content', 'Post.scheduled', 'Post.slug', 'Post.scheduled', 'User.id', 'User.name'),
 						'limit' => 20,
 						'order' => 'Post.scheduled DESC'
-					));
+				));
 			$this->set(compact('posts'));
 		} else {
+			$common_post_fields = "Post.content, Post.title, Post.slug, Post.user_id, User.name, User.id, Post.comment_count, Post.scheduled";
 			$this->Post->recursive = 0;
-			$this->set('posts', $this->paginate());
+			if (isset($this->params['url']['q'])) {
+				$q = $this->params['url']['q'];
+				#Snippet from http://codesnippets.joyent.com/posts/show/2119
+				#This appears not to be working as intended.
+				$this->paginate = array(
+					'fields' => "$common_post_fields, (MATCH (content) AGAINST ('$q' IN BOOLEAN MODE)*10) + (MATCH (title) AGAINST ('$q' IN BOOLEAN MODE)*10) AS rating",
+					'conditions' => "MATCH (title,content) AGAINST ('$q' IN BOOLEAN MODE)",
+					'order' => 'rating DESC', #Sort by rating not working?
+					'limit' => 7
+				);
+			} else {
+				$this->paginate = array(
+					'fields' => $common_post_fields,
+					'conditions' => array('scheduled < ' => $this->Post->today()),
+					'order' => 'scheduled DESC',
+					'limit' => 7
+				);
+			}
+			$posts = $this->paginate('Post');
+			$this->set('posts', $posts);
 		}
 	}
 
@@ -54,6 +74,9 @@ class PostsController extends AppController {
 
 	function backstage_add() {
 		if (!empty($this->data)) {
+			#Quick replaces to neaten pasted text, could've been more intelligent.
+			$this->data['Post']['content'] = str_replace('<p>&nbsp;</p>', '', $this->data['Post']['content']);
+			$this->data['Post']['content'] = str_replace('<p></p>', '', $this->data['Post']['content']);
 			$this->Post->create();
 			if ($this->Post->save($this->data)) {
 				$this->Session->setFlash(sprintf(__('The %s has been saved', true), 'post'));
@@ -72,6 +95,9 @@ class PostsController extends AppController {
 			$this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->data)) {
+			#Quick replaces to neaten pasted text, could've been more intelligent.
+			$this->data['Post']['content'] = str_replace('<p>&nbsp;</p>', '', $this->data['Post']['content']);
+			$this->data['Post']['content'] = str_replace('<p></p>', '', $this->data['Post']['content']);
 			if ($this->Post->save($this->data)) {
 				$this->Session->setFlash(sprintf(__('The %s has been saved', true), 'post'));
 				$this->redirect(array('action' => 'index'));
