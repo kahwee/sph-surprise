@@ -15,12 +15,18 @@ class PostsController extends AppController {
 		$this->set('posts', $this->paginate());
 	}
 
-	function view($id = null) {
-		if (!$id) {
+	function view() {
+		if (isset($this->params['slug'])) {
+			$post = $this->Post->find('first', array(
+					'conditions' => array('slug' => $this->params['slug']),
+					'fields' => array('Post.id', 'Post.title', 'Post.content', 'Post.scheduled', 'User.id', 'User.last_name', 'User.first_name'),
+				));
+			pr($post);
+			$this->set('post', $post);
+		} else {
 			$this->Session->setFlash(sprintf(__('Invalid %s', true), 'post'));
 			$this->redirect(array('action' => 'index'));
 		}
-		$this->set('post', $this->Post->read(null, $id));
 	}
 
 	function backstage_index() {

@@ -4,10 +4,8 @@
 	<tr>
 			<th><?php echo $this->Paginator->sort('id');?></th>
 			<th><?php echo $this->Paginator->sort('title');?></th>
-			<th><?php echo $this->Paginator->sort('content');?></th>
 			<th><?php echo $this->Paginator->sort('user_id');?></th>
-			<th><?php echo $this->Paginator->sort('created');?></th>
-			<th><?php echo $this->Paginator->sort('modified');?></th>
+			<th><?php echo $this->Paginator->sort('scheduled');?></th>
 			<th class="actions"><?php __('Actions');?></th>
 	</tr>
 	<?php
@@ -21,12 +19,10 @@
 	<tr<?php echo $class;?>>
 		<td><?php echo $post['Post']['id']; ?>&nbsp;</td>
 		<td><?php echo $post['Post']['title']; ?>&nbsp;</td>
-		<td><?php echo $post['Post']['content']; ?>&nbsp;</td>
 		<td>
 			<?php echo $this->Html->link($post['User']['full_name'], array('controller' => 'users', 'action' => 'view', $post['User']['id'])); ?>
 		</td>
-		<td><?php echo $post['Post']['created']; ?>&nbsp;</td>
-		<td><?php echo $post['Post']['modified']; ?>&nbsp;</td>
+		<td><?php echo $post['Post']['scheduled']; ?>&nbsp;</td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('View', true), array('action' => 'view', $post['Post']['id'])); ?>
 			<?php echo $this->Html->link(__('Edit', true), array('action' => 'edit', $post['Post']['id'])); ?>

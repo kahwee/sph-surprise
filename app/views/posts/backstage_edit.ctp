@@ -5,7 +5,19 @@
 	<?php
 		echo $this->Form->input('id');
 		echo $this->Form->input('title');
-		echo $this->Form->input('content');
+		echo $this->Wysiwyg->editor('content',
+			array(),
+			array(
+				'mode' => 'textareas',
+				'theme' => 'advanced',
+				'theme_advanced_buttons1' => "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,styleselect,formatselect,fontselect,fontsizeselect",
+				'theme_advanced_buttons2' => "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,code,|,insertdate,inserttime,preview,|,forecolor,backcolor",
+				'theme_advanced_toolbar_location' => "top",
+				'theme_advanced_toolbar_align' => "left",
+				'theme_advanced_statusbar_location' => "bottom",
+				'theme_advanced_resizing' => true,
+			)
+		);
 		echo $this->Form->input('scheduled');
 		echo $this->Form->input('user_id');
 	?>
