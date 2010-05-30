@@ -3,7 +3,7 @@
 class PostsController extends AppController {
 
 	var $name = 'Posts';
-	var $helpers = array('Time');
+	var $helpers = array('Time', 'Wysiwyg');
 
 	function beforeFilter() {
 		parent::beforeFilter();

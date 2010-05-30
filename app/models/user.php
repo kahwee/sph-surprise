@@ -32,7 +32,7 @@ class User extends AppModel {
 			'notempty' => array(
 				'rule' => array('notempty'),
 			),
-			'maxlength' => array(
+			'between' => array(
 				'rule' => array('between', 8, 20),
 				'message' => 'Passwords must be between 8 and 20 characters.',
 				'required' => true,
