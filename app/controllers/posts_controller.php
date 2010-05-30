@@ -19,9 +19,8 @@ class PostsController extends AppController {
 		if (isset($this->params['slug'])) {
 			$post = $this->Post->find('first', array(
 					'conditions' => array('slug' => $this->params['slug']),
-					'fields' => array('Post.id', 'Post.title', 'Post.content', 'Post.scheduled', 'User.id', 'User.last_name', 'User.first_name'),
+					'fields' => array('Post.id', 'Post.title', 'Post.content', 'Post.scheduled', 'Post.slug', 'Post.scheduled', 'User.id', 'User.name'),
 				));
-			pr($post);
 			$this->set('post', $post);
 		} else {
 			$this->Session->setFlash(sprintf(__('Invalid %s', true), 'post'));
@@ -71,6 +70,11 @@ class PostsController extends AppController {
 		}
 		if (empty($this->data)) {
 			$this->data = $this->Post->read(null, $id);
+			#Only owners can edit their own posts.
+			if (!$this->is_user($this->data['Post']['user_id'])) {
+				$this->Session->setFlash("You do not have permission to edit this post.");
+				$this->redirect(array('action' => 'index'));
+			}
 		}
 		$users = $this->Post->User->find('list');
 		$this->set(compact('users'));
@@ -81,6 +85,13 @@ class PostsController extends AppController {
 			$this->Session->setFlash(sprintf(__('Invalid id for %s', true), 'post'));
 			$this->redirect(array('action' => 'index'));
 		}
+		#Only owners can delete their own posts.
+		$this->data = $this->Post->read(null, $id);
+		if (!$this->is_user($this->data['Post']['user_id'])) {
+			$this->Session->setFlash("You do not have permission to delete this post.");
+			$this->redirect(array('action' => 'index'));
+		}
+		#Normal deletion operations, ignored.
 		if ($this->Post->delete($id)) {
 			$this->Session->setFlash(sprintf(__('%s deleted', true), 'Post'));
 			$this->redirect(array('action' => 'index'));

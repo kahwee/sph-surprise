@@ -6,8 +6,7 @@
 		echo $this->Form->input('id');
 		echo $this->Form->input('email');
 		echo $this->Form->input('password_hash');
-		echo $this->Form->input('first_name');
-		echo $this->Form->input('last_name');
+		echo $this->Form->input('name');
 		echo $this->Form->input('role_id');
 	?>
 	</fieldset>

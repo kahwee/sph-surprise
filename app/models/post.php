@@ -32,15 +32,9 @@ class Post extends AppModel {
 		'user_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
-			//'message' => 'Your custom message here',
-			//'allowEmpty' => false,
-			//'required' => false,
-			//'last' => false, // Stop validation after this rule
-			//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
 	);
-	//The Associations below have been created with all possible keys, those that are not needed can be removed
 	var $belongsTo = array(
 		'User' => array(
 			'className' => 'User',
@@ -50,5 +44,18 @@ class Post extends AppModel {
 			'order' => ''
 		)
 	);
+
+	/**
+	 * Called before each save operation, after validation. Return a non-true result
+	 * to halt the save.
+	 *
+	 * @return boolean True if the operation should continue, false if it should abort
+	 * @access public
+	 * @link http://book.cakephp.org/view/1048/Callback-Methods#beforeSave-1052
+	 */
+	function beforeSave($options) {
+		return true;
+	}
+
 }
 ?>
