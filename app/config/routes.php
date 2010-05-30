@@ -1,4 +1,5 @@
 <?php
+Router::parseExtensions('rss');
 Router::connect('/archives/:slug', array('controller' => 'posts', 'action' => 'view'));
 Router::connect('/login', array('controller' => 'users', 'action' => 'login'));
 Router::connect('/logout', array('controller' => 'users', 'action' => 'logout'));

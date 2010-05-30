@@ -3,7 +3,8 @@
 class PostsController extends AppController {
 
 	var $name = 'Posts';
-	var $helpers = array('Text', 'Time', 'Wysiwyg');
+	var $helpers = array('Rss', 'Text', 'Time', 'Wysiwyg');
+	var $components = array('RequestHandler');
 
 	function beforeFilter() {
 		parent::beforeFilter();
@@ -11,8 +12,18 @@ class PostsController extends AppController {
 	}
 
 	function index() {
-		$this->Post->recursive = 0;
-		$this->set('posts', $this->paginate());
+		if ($this->RequestHandler->isRss()) {
+			$posts = $this->Post->find('all',
+					array(
+						'fields' => array('Post.id', 'Post.title', 'Post.comment_count', 'Post.content', 'Post.scheduled', 'Post.slug', 'Post.scheduled', 'User.id', 'User.name'),
+						'limit' => 20,
+						'order' => 'Post.scheduled DESC'
+					));
+			$this->set(compact('posts'));
+		} else {
+			$this->Post->recursive = 0;
+			$this->set('posts', $this->paginate());
+		}
 	}
 
 	function view() {
