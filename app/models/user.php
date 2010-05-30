@@ -3,8 +3,7 @@
 class User extends AppModel {
 
 	var $name = 'User';
-	var $displayField = 'full_name';
-	var $virtualFields = array('full_name' => 'CONCAT(User.first_name, " ", User.last_name)');
+	var $displayField = 'email';
 	var $validate = array(
 		'email' => array(
 			'email' => array(
@@ -47,27 +46,10 @@ class User extends AppModel {
 				'rule' => array('notempty'),
 			),
 		),
-		'first_name' => array(
-			'maxlength' => array(
-				'rule' => array('maxlength', 127),
-				'message' => 'First names must be less than 127 characters.',
-				'required' => true,
-			),
-			'minlength' => array(
-				'rule' => array('minlength', 1),
-				'message' => 'First names must be more than 1 character.',
-				'required' => true,
-			),
-		),
-		'last_name' => array(
-			'maxlength' => array(
-				'rule' => array('maxlength', 127),
-				'message' => 'Last names must be less than 127 characters.',
-				'required' => true,
-			),
-			'minlength' => array(
-				'rule' => array('minlength', 1),
-				'message' => 'Last names must be more than 1 character.',
+		'name' => array(
+			'between' => array(
+				'rule' => array('between', 8, 20),
+				'message' => 'Name must be between 8 and 20 characters.',
 				'required' => true,
 			),
 		),
