@@ -7,7 +7,7 @@
 		
 		<p>Posted by <?php echo $this->Html->link($post['User']['name'], array('controller' => 'users', 'action' => 'view', $post['User']['id'])); ?> on <?php echo $post['Post']['scheduled']; ?></p>
 		<p>
-		<?php echo $this->Html->link(__('View', true), array('action' => 'view', $post['Post']['id'])); ?>
+		<?php echo $this->Html->link(sprintf(__n('%d comments', '%d comments', $post['Post']['comment_count'], true), $post['Post']['comment_count']), array('controller' => 'posts', 'action' => 'view', 'slug' => $post['Post']['slug'], '#' => 'comments')); ?>
 	</p>
 	<hr />
 	<?php endforeach; ?>

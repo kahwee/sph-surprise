@@ -9,3 +9,4 @@
 	}
 	?>
 </p>
+<h3><?php echo sprintf(__n('%d comments', '%d comments', $post['Post']['comment_count'], true), $post['Post']['comment_count']); ?></h3>

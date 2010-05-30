@@ -3,7 +3,7 @@
 class PostsController extends AppController {
 
 	var $name = 'Posts';
-	var $helpers = array('Time', 'Wysiwyg');
+	var $helpers = array('Text', 'Time', 'Wysiwyg');
 
 	function beforeFilter() {
 		parent::beforeFilter();
@@ -19,7 +19,7 @@ class PostsController extends AppController {
 		if (isset($this->params['slug'])) {
 			$post = $this->Post->find('first', array(
 					'conditions' => array('slug' => $this->params['slug']),
-					'fields' => array('Post.id', 'Post.title', 'Post.content', 'Post.scheduled', 'Post.slug', 'Post.scheduled', 'User.id', 'User.name'),
+					'fields' => array('Post.id', 'Post.title', 'Post.comment_count', 'Post.content', 'Post.scheduled', 'Post.slug', 'Post.scheduled', 'User.id', 'User.name'),
 				));
 			$this->set('post', $post);
 		} else {
@@ -86,7 +86,7 @@ class PostsController extends AppController {
 			$this->redirect(array('action' => 'index'));
 		}
 		#Only owners can delete their own posts.
-		$this->data = $this->Post->read(null, $id);
+		$this->data = $this->Post->read(array('user_id', 'id'), $id);
 		if (!$this->is_user($this->data['Post']['user_id'])) {
 			$this->Session->setFlash("You do not have permission to delete this post.");
 			$this->redirect(array('action' => 'index'));
