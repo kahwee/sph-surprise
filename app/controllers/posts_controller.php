@@ -58,12 +58,10 @@ class PostsController extends AppController {
 		if (isset($this->params['slug'])) {
 			$post = $this->Post->find('first', array(
 					'conditions' => array('slug' => $this->params['slug']),
-					'fields' => array(
-						'Post.id', 'Post.title', 'Post.comment_count',
-						'Post.content', 'Post.scheduled', 'Post.slug',
-						'Post.scheduled', 'User.id', 'User.name',
-						'Comment.id', 'Comment.name', 'Comment.email',
-						'Comment.content',
+					'fields' => array('id', 'title', 'content', 'comment_count', 'scheduled', 'slug'),
+					'contain' => array(
+						'Comment' => array('id', 'name', 'content', 'email', 'created'),
+						'User' => array('id', 'name'),
 					),
 				));
 			$this->set('post', $post);

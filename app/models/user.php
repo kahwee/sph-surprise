@@ -83,6 +83,7 @@ class User extends AppModel {
 			'counterQuery' => ''
 		)
 	);
+	var $actsAs = array('Containable');
 
 	/**
 	 * Called before each save operation, after validation. Return a non-true result

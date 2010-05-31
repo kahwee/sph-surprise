@@ -4,7 +4,10 @@ class Post extends AppModel {
 
 	var $name = 'Post';
 	var $displayField = 'title';
-	var $actsAs = array('Sluggable' => array('overwrite' => true,));
+	var $actsAs = array(
+		'Sluggable' => array('overwrite' => true,),
+		'Containable',
+	);
 	var $validate = array(
 		'title' => array(
 			'notempty' => array(
@@ -51,7 +54,7 @@ class Post extends AppModel {
 			'conditions' => '',
 			'fields' => '',
 			'order' => 'created ASC',
-			'dependent'=> true, #When dependent is set to true, recursive model deletion is possible.
+			'dependent' => true, #When dependent is set to true, recursive model deletion is possible.
 		)
 	);
 
