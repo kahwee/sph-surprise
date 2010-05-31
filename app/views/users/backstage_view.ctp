@@ -93,7 +93,7 @@ $class = ' class="altrow"'; ?>
 
 						<div class="actions">
 							<ul>
-								<li><?php echo $this->Html->link(sprintf(__('New %s', true), __('Post', true)), array('controller' => 'posts', 'action' => 'add')); ?> </li>
+								<li><?php echo $this->Html->link(sprintf(__('Write a new %s', true), __('Post', true)), array('controller' => 'posts', 'action' => 'add')); ?> </li>
 		</ul>
 	</div>
 </div>

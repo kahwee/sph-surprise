@@ -38,18 +38,16 @@
 
 			<div class="paging">
 		<?php echo $this->Paginator->prev('<< ' . __('previous', true), array(), null, array('class' => 'disabled')); ?>
-					 | 	<?php echo $this->Paginator->numbers(); ?>
-						|
+							 | 	<?php echo $this->Paginator->numbers(); ?>
+								|
 		<?php echo $this->Paginator->next(__('next', true) . ' >>', array(), null, array('class' => 'disabled')); ?>
 			</div>
 		</div>
 		<div class="actions">
 			<h3><?php __('Actions'); ?></h3>
 			<ul>
-				<li><?php echo $this->Html->link(sprintf(__('New %s', true), __('User', true)), array('action' => 'add')); ?></li>
-				<li><?php echo $this->Html->link(sprintf(__('List %s', true), __('Roles', true)), array('controller' => 'roles', 'action' => 'index')); ?> </li>
-				<li><?php echo $this->Html->link(sprintf(__('New %s', true), __('Role', true)), array('controller' => 'roles', 'action' => 'add')); ?> </li>
-				<li><?php echo $this->Html->link(sprintf(__('List %s', true), __('Posts', true)), array('controller' => 'posts', 'action' => 'index')); ?> </li>
-				<li><?php echo $this->Html->link(sprintf(__('New %s', true), __('Post', true)), array('controller' => 'posts', 'action' => 'add')); ?> </li>
+				<li><?php echo $this->Html->link(sprintf(__('Add a %s', true), __('User', true)), array('action' => 'add')); ?></li>
+				<li><?php echo $this->Html->link(sprintf(__('All %s', true), __('Posts', true)), array('controller' => 'posts', 'action' => 'index')); ?> </li>
+				<li><?php echo $this->Html->link(sprintf(__('Write a new %s', true), __('Post', true)), array('controller' => 'posts', 'action' => 'add')); ?> </li>
 	</ul>
 </div>
