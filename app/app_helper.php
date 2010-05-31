@@ -14,5 +14,18 @@ class AppHelper extends Helper {
 		return $user_id == $this->Session->read('Auth.User.id');
 	}
 
+	/**
+	 * Gets the logged in user from the session. 
+	 *
+	 * @return mixed false if not logged in, else the logged in user.
+	 */
+	function get_logged_in() {
+		$user = $this->Session->read('Auth.User');
+		if (empty($user))
+			return false;
+		else
+			return $user;
+	}
+
 }
 ?>
