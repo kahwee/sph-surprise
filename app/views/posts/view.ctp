@@ -2,7 +2,7 @@
 <div><?php echo $post['Post']['content']; ?></div>
 
 <p>
-	Posted by <?php echo $this->Html->link($post['User']['name'], array('controller' => 'users', 'action' => 'view', $post['User']['id'])); ?> on <?php echo $post['Post']['scheduled']; ?>
+	Posted by <?php echo $this->Html->link($post['User']['name'], array('controller' => 'users', 'action' => 'view', $post['User']['id'])); ?> on <?php echo $this->Time->nice($post['Post']['scheduled']); ?>
 	<?php
 	if ($this->Html->is_user($post['User']['id'])) {
 		echo ' | ' . $this->Html->link('Edit', array('controller' => 'posts', 'action' => 'edit', $post['Post']['id'], 'backstage' => true));

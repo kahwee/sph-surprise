@@ -13,6 +13,9 @@ class UsersController extends AppController {
 		);
 	}
 
+	/**
+	 * Custom handler in order to tell user the email and password do not match.
+	 */
 	function login() {
 		if ($this->data) {
 			$login = $this->Auth->login($this->data);
@@ -22,10 +25,16 @@ class UsersController extends AppController {
 		}
 	}
 
+	/**
+	 * User logout. Handled for Auth component.
+	 */
 	function logout() {
 		$this->redirect($this->Auth->logout());
 	}
 
+	/**
+	 * For user registration.
+	 */
 	function register() {
 		if (!empty($this->data)) {
 			$this->User->create();
@@ -73,16 +82,12 @@ class UsersController extends AppController {
 		}
 		if (!empty($this->data)) {
 			#Hash the password for saving.
-			pr($this->data);
 			if (empty($this->data['User']['password_confirm1'])) {
-			pr($this->data);
 				unset($this->data['User']['password_confirm1']);
 				unset($this->data['User']['password_confirm2']);
-			pr($this->data);
 			} else {
 				$this->data['User']['password_hash'] = $this->Auth->password($this->data['User']['password_confirm2']);
 			}
-			pr($this->data);
 			if ($this->User->save($this->data)) {
 				$this->Session->setFlash(sprintf(__('The %s has been saved', true), 'user'));
 				$this->redirect(array('action' => 'index'));

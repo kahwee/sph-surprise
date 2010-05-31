@@ -5,7 +5,7 @@
 		<h3><?php echo $this->Html->link($post['Post']['title'], array('controller' => 'posts', 'action' => 'view', 'slug' => $post['Post']['slug'])); ?></h3>
 		<div><?php echo $post['Post']['content']; ?></div>
 
-		<p>Posted by <?php echo $this->Html->link($post['User']['name'], array('controller' => 'users', 'action' => 'view', $post['User']['id'])); ?> on <?php echo $post['Post']['scheduled']; ?></p>
+		<p>Posted by <?php echo $this->Html->link($post['User']['name'], array('controller' => 'users', 'action' => 'view', $post['User']['id'])); ?> on <?php echo $this->Time->relativeTime($post['Post']['scheduled']); ?></p>
 		<p>
 		<?php echo $this->Html->link(sprintf(__n('%d comments', '%d comments', $post['Post']['comment_count'], true), $post['Post']['comment_count']), array('controller' => 'posts', 'action' => 'view', 'slug' => $post['Post']['slug'], '#' => 'comments')); ?>
 	</p>
