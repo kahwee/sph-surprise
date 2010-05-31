@@ -48,8 +48,8 @@ class User extends AppModel {
 		),
 		'name' => array(
 			'between' => array(
-				'rule' => array('between', 8, 20),
-				'message' => 'Name must be between 8 and 20 characters.',
+				'rule' => array('between', 3, 20),
+				'message' => 'Name must be between 3 and 20 characters.',
 				'required' => true,
 			),
 		),
@@ -93,6 +93,7 @@ class User extends AppModel {
 	 * @link http://book.cakephp.org/view/1048/Callback-Methods#beforeSave-1052
 	 */
 	function beforeSave($options = array()) {
+		#To track the previously used IP address.
 		if (!isset($this->data['User']['last_ip']))
 			$this->data['User']['last_ip'] = $_SERVER['REMOTE_ADDR'];
 		return true;

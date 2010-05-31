@@ -5,8 +5,17 @@
 	Posted by <?php echo $this->Html->link($post['User']['name'], array('controller' => 'users', 'action' => 'view', $post['User']['id'])); ?> on <?php echo $post['Post']['scheduled']; ?>
 	<?php
 	if ($this->Html->is_user($post['User']['id'])) {
-		echo ' | '.$this->Html->link('Edit', array('controller' => 'posts', 'action' => 'edit', $post['Post']['id'], 'backstage' => true));
+		echo ' | ' . $this->Html->link('Edit', array('controller' => 'posts', 'action' => 'edit', $post['Post']['id'], 'backstage' => true));
 	}
 	?>
 </p>
 <h3><?php echo sprintf(__n('%d comments', '%d comments', $post['Post']['comment_count'], true), $post['Post']['comment_count']); ?></h3>
+
+<h3>Add your comment</h3>
+<?php
+	echo $this->Form->create('Comment', array('url' => $this->Html->url()));
+	echo $this->Form->input('name');
+	echo $this->Form->input('email');
+	echo $this->Form->input('content', array('type' => 'textarea'));
+	echo $this->Form->end(__('Submit comment', true));
+?>

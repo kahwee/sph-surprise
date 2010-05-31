@@ -44,6 +44,16 @@ class Post extends AppModel {
 			'order' => ''
 		)
 	);
+	var $hasMany = array(
+		'Comment' => array(
+			'className' => 'Comment',
+			'foreignKey' => 'post_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => 'created ASC',
+			'dependent'=> true, #When dependent is set to true, recursive model deletion is possible.
+		)
+	);
 
 	/**
 	 * Called before each save operation, after validation. Return a non-true result

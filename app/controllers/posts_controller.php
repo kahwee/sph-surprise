@@ -5,6 +5,7 @@ class PostsController extends AppController {
 	var $name = 'Posts';
 	var $helpers = array('Rss', 'Text', 'Time', 'Wysiwyg');
 	var $components = array('RequestHandler');
+	var $uses = array('Post', 'Comment');
 
 	function beforeFilter() {
 		parent::beforeFilter();
@@ -53,12 +54,32 @@ class PostsController extends AppController {
 	}
 
 	function view() {
+		#FindBySlug
 		if (isset($this->params['slug'])) {
 			$post = $this->Post->find('first', array(
 					'conditions' => array('slug' => $this->params['slug']),
-					'fields' => array('Post.id', 'Post.title', 'Post.comment_count', 'Post.content', 'Post.scheduled', 'Post.slug', 'Post.scheduled', 'User.id', 'User.name'),
+					'fields' => array(
+						'Post.id', 'Post.title', 'Post.comment_count',
+						'Post.content', 'Post.scheduled', 'Post.slug',
+						'Post.scheduled', 'User.id', 'User.name',
+						'Comment.id', 'Comment.name', 'Comment.email',
+						'Comment.content',
+					),
 				));
 			$this->set('post', $post);
+
+			#Handles comments that may be added
+			if (!empty($this->data)) {
+				$this->data['Comment']['post_id'] = $post['Post']['id'];
+				$this->Comment->create();
+				$this->Comment->whitelist = array('name', 'email', 'content', 'ip', 'post_id');
+				if ($this->Comment->save($this->data)) {
+					$this->Session->setFlash(sprintf(__('The %s has been saved', true), 'comment'));
+					$this->redirect($this->referer());
+				} else {
+					$this->Session->setFlash(sprintf(__('The %s could not be saved. Please, try again.', true), 'comment'));
+				}
+			}
 		} else {
 			$this->Session->setFlash(sprintf(__('Invalid %s', true), 'post'));
 			$this->redirect(array('action' => 'index'));
