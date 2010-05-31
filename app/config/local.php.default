@@ -1,5 +1,4 @@
 <?php
-Configure::write('debug', 2);
-Configure::write('environment', 'kahwee_dev');
-Configure::write('host', 'http://t1.local');
+Configure::write('debug', 0);
+Configure::write('environment', 'default'); #Must match database.php's var
 ?>
