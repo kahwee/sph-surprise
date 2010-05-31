@@ -21,7 +21,7 @@
 		echo $this->Form->input('user_id', array('label' => 'Assign to user', 'selected' => $this->Session->read('Auth.User.id')));
 		?>
 	</fieldset>
-	<?php echo $this->Form->end(__('Submit', true)); ?>
+	<?php echo $this->Form->end(__('Add', true)); ?>
 	</div>
 	<div class="actions">
 		<h3><?php __('Actions'); ?></h3>

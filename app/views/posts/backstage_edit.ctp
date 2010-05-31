@@ -1,8 +1,8 @@
 <div class="posts form">
-<?php echo $this->Form->create('Post');?>
+	<?php echo $this->Form->create('Post'); ?>
 	<fieldset>
- 		<legend><?php printf(__('Backstage Edit %s', true), __('Post', true)); ?></legend>
-	<?php
+		<legend><?php printf(__('Backstage Edit %s', true), __('Post', true)); ?></legend>
+		<?php
 		echo $this->Form->input('id');
 		echo $this->Form->input('title', array('type' => 'text'));
 		echo $this->Wysiwyg->editor('content',
@@ -20,17 +20,17 @@
 		);
 		echo $this->Form->input('scheduled');
 		echo $this->Form->input('user_id');
-	?>
+		?>
 	</fieldset>
-<?php echo $this->Form->end(__('Submit', true));?>
-</div>
-<div class="actions">
-	<h3><?php __('Actions'); ?></h3>
-	<ul>
+	<?php echo $this->Form->end(__('Save', true)); ?>
+	</div>
+	<div class="actions">
+		<h3><?php __('Actions'); ?></h3>
+		<ul>
 
-		<li><?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $this->Form->value('Post.id')), null, sprintf(__('Are you sure you want to delete # %s?', true), $this->Form->value('Post.id'))); ?></li>
-		<li><?php echo $this->Html->link(sprintf(__('List %s', true), __('Posts', true)), array('action' => 'index'));?></li>
-		<li><?php echo $this->Html->link(sprintf(__('List %s', true), __('Users', true)), array('controller' => 'users', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('New %s', true), __('User', true)), array('controller' => 'users', 'action' => 'add')); ?> </li>
+			<li><?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $this->Form->value('Post.id')), null, sprintf(__('Are you sure you want to delete # %s?', true), $this->Form->value('Post.id'))); ?></li>
+			<li><?php echo $this->Html->link(sprintf(__('List %s', true), __('Posts', true)), array('action' => 'index')); ?></li>
+			<li><?php echo $this->Html->link(sprintf(__('List %s', true), __('Users', true)), array('controller' => 'users', 'action' => 'index')); ?> </li>
+			<li><?php echo $this->Html->link(sprintf(__('New %s', true), __('User', true)), array('controller' => 'users', 'action' => 'add')); ?> </li>
 	</ul>
 </div>

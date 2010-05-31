@@ -11,11 +11,15 @@ class PostsController extends AppController {
 		$this->Auth->allow('index', 'view');
 	}
 
+	/**
+	 * Handles RSS feed, the index page and the search results
+	 */
 	function index() {
 		if ($this->RequestHandler->isRss()) {
 			$posts = $this->Post->find('all',
 					array(
 						'fields' => array('Post.id', 'Post.title', 'Post.comment_count', 'Post.content', 'Post.scheduled', 'Post.slug', 'Post.scheduled', 'User.id', 'User.name'),
+						'conditions' => array('scheduled <= ' => $this->Post->today()),
 						'limit' => 20,
 						'order' => 'Post.scheduled DESC'
 				));
@@ -24,6 +28,7 @@ class PostsController extends AppController {
 			$common_post_fields = "Post.content, Post.title, Post.slug, Post.user_id, User.name, User.id, Post.comment_count, Post.scheduled";
 			$this->Post->recursive = 0;
 			if (isset($this->params['url']['q'])) {
+				#When there's a search query string 'q':
 				$q = $this->params['url']['q'];
 				#Snippet from http://codesnippets.joyent.com/posts/show/2119
 				#This appears not to be working as intended.
@@ -34,9 +39,10 @@ class PostsController extends AppController {
 					'limit' => 7
 				);
 			} else {
+				#When normal index is requested:
 				$this->paginate = array(
 					'fields' => $common_post_fields,
-					'conditions' => array('scheduled < ' => $this->Post->today()),
+					'conditions' => array('scheduled <= ' => $this->Post->today()),
 					'order' => 'scheduled DESC',
 					'limit' => 7
 				);
