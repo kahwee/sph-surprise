@@ -29,6 +29,7 @@ class UsersController extends AppController {
 	function register() {
 		if (!empty($this->data)) {
 			$this->User->create();
+			#Hash the password for saving.
 			$this->data['User']['password_hash'] = $this->Auth->password($this->data['User']['password_confirm2']);
 			if ($this->User->save($this->data)) {
 				#Time to send an email?
@@ -54,6 +55,8 @@ class UsersController extends AppController {
 	function backstage_add() {
 		if (!empty($this->data)) {
 			$this->User->create();
+			#Hash the password for saving.
+			$this->data['User']['password_hash'] = $this->Auth->password($this->data['User']['password_confirm2']);
 			if ($this->User->save($this->data)) {
 				$this->Session->setFlash(sprintf(__('The %s has been saved', true), 'user'));
 				$this->redirect(array('action' => 'index'));
@@ -61,8 +64,6 @@ class UsersController extends AppController {
 				$this->Session->setFlash(sprintf(__('The %s could not be saved. Please, try again.', true), 'user'));
 			}
 		}
-		$roles = $this->User->Role->find('list');
-		$this->set(compact('roles'));
 	}
 
 	function backstage_edit($id = null) {
@@ -71,6 +72,17 @@ class UsersController extends AppController {
 			$this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->data)) {
+			#Hash the password for saving.
+			pr($this->data);
+			if (empty($this->data['User']['password_confirm1'])) {
+			pr($this->data);
+				unset($this->data['User']['password_confirm1']);
+				unset($this->data['User']['password_confirm2']);
+			pr($this->data);
+			} else {
+				$this->data['User']['password_hash'] = $this->Auth->password($this->data['User']['password_confirm2']);
+			}
+			pr($this->data);
 			if ($this->User->save($this->data)) {
 				$this->Session->setFlash(sprintf(__('The %s has been saved', true), 'user'));
 				$this->redirect(array('action' => 'index'));
@@ -81,8 +93,6 @@ class UsersController extends AppController {
 		if (empty($this->data)) {
 			$this->data = $this->User->read(null, $id);
 		}
-		$roles = $this->User->Role->find('list');
-		$this->set(compact('roles'));
 	}
 
 	function backstage_delete($id = null) {

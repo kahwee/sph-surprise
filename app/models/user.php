@@ -24,7 +24,6 @@ class User extends AppModel {
 			'maxlength' => array(
 				'rule' => array('between', 8, 20),
 				'message' => 'Passwords must be between 8 and 20 characters.',
-				'required' => true,
 			),
 		),
 		'password_confirm2' => array(
@@ -34,7 +33,6 @@ class User extends AppModel {
 			'between' => array(
 				'rule' => array('between', 8, 20),
 				'message' => 'Passwords must be between 8 and 20 characters.',
-				'required' => true,
 			),
 			'isEqualTo' => array(
 				'rule' => array('equalTo', 'password_confirm1'), // password is hashed
@@ -58,15 +56,6 @@ class User extends AppModel {
 				'rule' => array('numeric'),
 			),
 		),
-	);
-	var $belongsTo = array(
-		'Role' => array(
-			'className' => 'Role',
-			'foreignKey' => 'role_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		)
 	);
 	var $hasMany = array(
 		'post' => array(

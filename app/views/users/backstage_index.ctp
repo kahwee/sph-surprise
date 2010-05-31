@@ -6,7 +6,6 @@
 			<th><?php echo $this->Paginator->sort('email'); ?></th>
 			<th><?php echo $this->Paginator->sort('last_ip'); ?></th>
 			<th><?php echo $this->Paginator->sort('name'); ?></th>
-			<th><?php echo $this->Paginator->sort('role_id'); ?></th>
 			<th class="actions"><?php __('Actions'); ?></th>
 		</tr>
 		<?php
@@ -22,10 +21,7 @@
 				<td><?php echo $user['User']['email']; ?>&nbsp;</td>
 				<td><?php echo $user['User']['last_ip']; ?>&nbsp;</td>
 				<td><?php echo $user['User']['name']; ?>&nbsp;</td>
-				<td>
-				<?php echo $this->Html->link($user['Role']['name'], array('controller' => 'roles', 'action' => 'view', $user['Role']['id'])); ?>
-			</td>
-			<td class="actions">
+				<td class="actions">
 				<?php echo $this->Html->link(__('View', true), array('action' => 'view', $user['User']['id'])); ?>
 				<?php echo $this->Html->link(__('Edit', true), array('action' => 'edit', $user['User']['id'])); ?>
 				<?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $user['User']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $user['User']['id'])); ?>
@@ -42,8 +38,8 @@
 
 			<div class="paging">
 		<?php echo $this->Paginator->prev('<< ' . __('previous', true), array(), null, array('class' => 'disabled')); ?>
-			 | 	<?php echo $this->Paginator->numbers(); ?>
-				|
+					 | 	<?php echo $this->Paginator->numbers(); ?>
+						|
 		<?php echo $this->Paginator->next(__('next', true) . ' >>', array(), null, array('class' => 'disabled')); ?>
 			</div>
 		</div>
