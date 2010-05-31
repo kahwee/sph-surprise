@@ -11,6 +11,7 @@ class UsersController extends AppController {
 			'username' => 'email',
 			'password' => 'password_hash'
 		);
+		$this->Auth->allow('login', 'logout', 'register');
 	}
 
 	/**
